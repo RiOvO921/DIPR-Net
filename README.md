@@ -23,7 +23,6 @@ Upon acceptance and publication of our manuscript, we will release the complete 
 - **Evaluation Code:** Code for calculating all performance metrics reported in the paper (mDice, mIoU, etc.).
 - **Data Preprocessing Scripts:** Scripts detailing the data preparation and augmentation steps.
 - **Visualization Tools:** Code to generate qualitative results and heatmap visualizations.
-- **Pre-trained Model Weights:** The model weights used to produce the results in our paper.
 
 We believe that providing the complete codebase will be of great value to the community and facilitate future research in this area.
 
