@@ -99,16 +99,19 @@ class DIPR_Net(AbstractDynamicNetworkArchitectures):
         proto_pred_logits = PrototypeSimilarityScorer(pixel_features, self.prototypes)
 
         if self.training:
-            # Handle deep supervision if linear_pred_logits is a list
+            if 'center_masks' not in locals():
+                center_masks = None
+                boundary_masks = None
+
             if isinstance(linear_pred_logits, (list, tuple)):
                 proto_pred_logits_ds = [
-                    F.interpolate(proto_pred_logits, size=p.shape[-2:], mode='bilinear', align_corners=False)
+                    F.interpolate(proto_pred_logits, size=p.shape[-2:], mode='bilinear', align_corners=False) 
                     for p in linear_pred_logits
                 ]
-            else:
-                proto_pred_logits_ds = proto_pred_logits
-
-            return linear_pred_logits, proto_pred_logits_ds, pixel_features, self.prototypes, center_masks, boundary_masks
+                return linear_pred_logits, proto_pred_logits_ds, pixel_features, self.prototypes, center_masks, boundary_masks
+            
+            return linear_pred_logits, proto_pred_logits, pixel_features, self.prototypes, center_masks, boundary_masks
+            
         else:
             # Inference mode
             pred_l = linear_pred_logits[0] if isinstance(linear_pred_logits, (list, tuple)) else linear_pred_logits
@@ -118,3 +121,4 @@ class DIPR_Net(AbstractDynamicNetworkArchitectures):
 
             # Average softmax probabilities for final prediction
             return (F.softmax(pred_l, 1) + F.softmax(proto_pred_logits, 1)) / 2
+
