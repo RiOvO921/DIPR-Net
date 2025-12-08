@@ -53,7 +53,15 @@ class NormalizedFeatureProjector(nn.Module):  # NFP
 # ===== Helper Functions & Loss =====
 
 def _bapb_distance_map(mask: torch.Tensor):
-    dist_maps = [torch.from_numpy(distance(m.cpu().numpy())).float() for m in mask.squeeze(1)]
+    # mask shape: [1, H, W]
+    dist_maps = []
+    for m in mask.squeeze(1):
+        d_map = distance(m.cpu().numpy())
+        if d_map.max() > 0:
+            d_map = d_map / d_map.max()  # 归一化到 [0, 1]
+        # --------------------
+        dist_maps.append(torch.from_numpy(d_map).float())
+    
     return torch.stack(dist_maps, dim=0).unsqueeze(1).to(mask.device)
 
 
@@ -109,5 +117,6 @@ class PrototypeAlignmentLoss(nn.Module):  # PAL
 
         # Positive prototype index: class_idx * 2 + (0 if center else 1)
         pos_idx = fg_t * N_REGIONS + (~fg_is_c).long()
+
 
         return self.ce(logits, pos_idx)
