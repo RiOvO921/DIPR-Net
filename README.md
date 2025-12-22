@@ -1,6 +1,6 @@
 # DIPR-Net: A Dual-Branch Integrated Prototype Representation Network for Colonoscopy Polyp Segmentation
 
-This repository contains the official PyTorch implementation for the paper "DIPR-Net: A Dual-Branch Integrated Prototype Representation Network for Colonoscopy Polyp Segmentation". A manuscript detailing the method and experimental results has been submitted to **Signal, Image and Video Processing (SIViP)**.
+This repository contains the official PyTorch implementation for the paper "DIPR-Net: A Dual-Branch Integrated Prototype Representation Network for Colonoscopy Polyp Segmentation". A manuscript detailing the method and experimental results has been submitted to **Machine Vision and Applications**.
 
 DIPR-Net is a unified framework designed for accurate and robust segmentation of polyps in colonoscopy images. It addresses the challenges of blurred boundaries and high morphological variability by synergistically integrating a hybrid feature encoder with a novel prototype-guided, dual-branch decoder. 
 
